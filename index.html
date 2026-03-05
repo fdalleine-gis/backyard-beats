@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backyard Beats & Bites</title>
+<style>
+  /* Algemene stijl met subtiele achtergrondtextuur */
+  body {
+    font-family: 'Helvetica', sans-serif;
+    background: #fef7ef url('https://www.transparenttextures.com/patterns/soft-wall.png') repeat;
+    color: #3e2f1c;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Header met pennant flags */
+  header {
+    background: #f1c27d;
+    text-align: center;
+    padding: 40px 20px 30px 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  .flags {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .flag {
+    width: 20px;
+    height: 15px;
+    margin: 0 3px;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    font-family: 'Georgia', serif;
+  }
+  header p {
+    margin: 5px 0 0 0;
+    font-size: 1.2em;
+    font-style: italic;
+  }
+
+  main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 15px;
+  }
+
+  section {
+    margin-bottom: 30px;
+    background: #fff8f0 url('https://www.transparenttextures.com/patterns/wood-pattern.png') repeat;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  h2 {
+    font-family: 'Georgia', serif;
+    border-bottom: 2px solid #f1c27d;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+  }
+
+  /* Zones met tooltips */
+  .zones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    text-align: center;
+  }
+  .zone {
+    position: relative;
+    background: #fdf0e0;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  .zone span {
+    display: block;
+    font-size: 2em;
+    margin-bottom: 5px;
+  }
+  .zone:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
+
+  /* Tooltip styling */
+  .tooltip {
+    visibility: hidden;
+    width: 180px;
+    background-color: #f7d1a1;
+    color: #3e2f1c;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -90px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.9em;
+    pointer-events: none;
+  }
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #f7d1a1 transparent transparent transparent;
+  }
+  .zone:hover .tooltip,
+  .zone.show-tooltip .tooltip {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (hover: none) {
+    .zone:hover {
+      transform: none;
+    }
+  }
+
+  /* Timetable */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #f1c27d;
+  }
+  th {
+    background: #f7d1a1;
+  }
+
+  /* Extra info */
+  .info {
+    font-size: 1em;
+    line-height: 1.5;
+  }
+  .info p {
+    margin: 8px 0;
+  }
+  .rsvp {
+    display: inline-block;
+    margin-top: 10px;
+    background: #f1c27d;
+    color: #3e2f1c;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 15px 0;
+    background: #f1c27d;
+    color: #3e2f1c;
+    font-size: 0.9em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="flags">
+    <div class="flag" style="background:#f1c27d;"></div>
+    <div class="flag" style="background:#f7d1a1;"></div>
+    <div class="flag" style="background:#fdf0e0;"></div>
+    <div class="flag" style="background:#f1c27d;"></div>
+    <div class="flag" style="background:#f7d1a1;"></div>
+  </div>
+  <h1>Backyard Beats & Bites</h1>
+  <p>Music – Friends – Summer Vibes</p>
+</header>
+
+<main>
+  <!-- Hosts & info -->
+  <section>
+    <h2>Info</h2>
+    <p><strong>Hosts:</strong> Sophie (40) & Frederick (45)</p>
+    <p><strong>Datum:</strong> 27 June 2026</p>
+    <p><strong>Locatie:</strong> Dullaertweg 60, Gistel</p>
+  </section>
+
+  <!-- Zones -->
+  <section>
+    <h2>Zones</h2>
+    <div class="zones">
+      <div class="zone">
+        <span>🎤</span>Main Stage
+        <div class="tooltip">Live bands and DJ performances on the main stage.</div>
+      </div>
+      <div class="zone">
+        <span>🍔</span>Food Corner
+        <div class="tooltip">Burgers, snacks, and festival treats available here.</div>
+      </div>
+      <div class="zone">
+        <span>🍺</span>Drinks
+        <div class="tooltip">Beer, wine, and soft drinks for all attendees.</div>
+      </div>
+      <div class="zone">
+        <span>🔥</span>Chill Zone
+        <div class="tooltip">Relax by the campfire with friends and good vibes.</div>
+      </div>
+      <div class="zone">
+        <span>📸</span>Photo Booth
+        <div class="tooltip">Capture fun memories with festival-themed props.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timetable -->
+  <section>
+    <h2>Timetable</h2>
+    <table>
+      <tr><th>Tijd</th><th>Activiteit</th></tr>
+      <tr><td>18:00</td><td>Gates open</td></tr>
+      <tr><td>19:00</td><td>Food Corner opens</td></tr>
+      <tr><td>20:00–22:00</td><td>Live Music</td></tr>
+      <tr><td>22:00–23:00</td><td>DJ Set 1</td></tr>
+      <tr><td>23:00–24:00</td><td>Surprise</td></tr>
+      <tr><td>24:00–01:00</td><td>DJ Set 2</td></tr>
+      <tr><td>01:00 – …</td><td>Final DJ</td></tr>
+    </table>
+  </section>
+
+  <!-- Extra info -->
+  <section>
+    <h2>Extra Info</h2>
+    <div class="info">
+      <p><strong>Dresscode:</strong> Festival vibes</p>
+      <p>Food & drinks available</p>
+      <p>Parking & bike parking</p>
+      <p><strong>Cadeautip ✉️</strong></p>
+      <p><strong>RSVP:</strong> Please confirm your attendance via 0474 56 76 96</p>
+      <a href="tel:+32474567696" class="rsvp">RSVP Now</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 Backyard Beats & Bites
+</footer>
+
+<script>
+  // JavaScript voor mobiel tap/toggle van tooltips
+  const zones = document.querySelectorAll('.zone');
+  zones.forEach(zone => {
+    zone.addEventListener('click', () => {
+      // verwijder show-tooltip van andere zones
+      zones.forEach(z => {
+        if (z !== zone) z.classList.remove('show-tooltip');
+      });
+      // toggle deze zone
+      zone.classList.toggle('show-tooltip');
+    });
+  });
+
+  // Sluit tooltips als je buiten klikt
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.zone')) {
+      zones.forEach(z => z.classList.remove('show-tooltip'));
+    }
+  });
+</script>
+
+</body>
+</html>
