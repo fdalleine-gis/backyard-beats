@@ -1,288 +1,486 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Backyard Beats & Bites</title>
-<style>
-  /* Algemene stijl met subtiele achtergrondtextuur */
-  body {
-    font-family: 'Helvetica', sans-serif;
-    background: #fef7ef url('https://www.transparenttextures.com/patterns/soft-wall.png') repeat;
-    color: #3e2f1c;
-    margin: 0;
-    padding: 0;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backyard Beats & Bites | Sophie & Frederick</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  /* Header met pennant flags */
-  header {
-    background: #f1c27d;
-    text-align: center;
-    padding: 40px 20px 30px 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    position: relative;
-  }
+    <style>
+        :root {
+            --sand: #fdf6e3;
+            --terracotta: #d66853;
+            --warm-yellow: #ffcf33;
+            --festival-pink: #ff2e77;
+            --festival-teal: #2eeaff;
+            --deep-purple: #310a31;
+            --sunset-gradient: linear-gradient(180deg, rgba(49, 10, 49, 0.9) 0%, rgba(255, 46, 119, 0.7) 50%, rgba(255, 207, 51, 0.8) 100%);
+            --glass: rgba(255, 255, 255, 0.1);
+        }
 
-  .flags {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
-  .flag {
-    width: 20px;
-    height: 15px;
-    margin: 0 3px;
-    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
-  }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  header h1 {
-    margin: 0;
-    font-size: 2.5em;
-    font-family: 'Georgia', serif;
-  }
-  header p {
-    margin: 5px 0 0 0;
-    font-size: 1.2em;
-    font-style: italic;
-  }
+        html { scroll-behavior: smooth; }
 
-  main {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 15px;
-  }
+        body {
+            background-color: #1a1a1a;
+            color: var(--sand);
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-  section {
-    margin-bottom: 30px;
-    background: #fff8f0 url('https://www.transparenttextures.com/patterns/wood-pattern.png') repeat;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: relative;
-  }
+        h1, h2, h3 {
+            font-family: 'Abril Fatface', cursive;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-  h2 {
-    font-family: 'Georgia', serif;
-    border-bottom: 2px solid #f1c27d;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-  }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
 
-  /* Zones met tooltips */
-  .zones {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 15px;
-    text-align: center;
-  }
-  .zone {
-    position: relative;
-    background: #fdf0e0;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.3s;
-  }
-  .zone span {
-    display: block;
-    font-size: 2em;
-    margin-bottom: 5px;
-  }
-  .zone:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  }
+        /* --- BACKGROUND --- */
+        .fixed-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1459749411177-042180ce673c?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
 
-  /* Tooltip styling */
-  .tooltip {
-    visibility: hidden;
-    width: 180px;
-    background-color: #f7d1a1;
-    color: #3e2f1c;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -90px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 0.9em;
-    pointer-events: none;
-  }
-  .tooltip::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #f7d1a1 transparent transparent transparent;
-  }
-  .zone:hover .tooltip,
-  .zone.show-tooltip .tooltip {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-  }
+        .gradient-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--sunset-gradient);
+            z-index: -1;
+        }
 
-  @media (hover: none) {
-    .zone:hover {
-      transform: none;
-    }
-  }
+        /* --- DECORATIONS (Vervanging voor gebroken afbeeldingen) --- */
+        .decor-flower {
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+            color: var(--festival-pink);
+            font-size: 6rem;
+            filter: drop-shadow(0 0 15px var(--festival-pink));
+            opacity: 0.6;
+            animation: rotateFlower 20s linear infinite;
+        }
 
-  /* Timetable */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  th, td {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #f1c27d;
-  }
-  th {
-    background: #f7d1a1;
-  }
+        @keyframes rotateFlower {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-  /* Extra info */
-  .info {
-    font-size: 1em;
-    line-height: 1.5;
-  }
-  .info p {
-    margin: 8px 0;
-  }
-  .rsvp {
-    display: inline-block;
-    margin-top: 10px;
-    background: #f1c27d;
-    color: #3e2f1c;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-  }
+        .string-lights {
+            position: absolute;
+            top: 0; width: 100%;
+            display: flex;
+            justify-content: space-around;
+            z-index: 10;
+            pointer-events: none;
+        }
 
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 15px 0;
-    background: #f1c27d;
-    color: #3e2f1c;
-    font-size: 0.9em;
-  }
-</style>
+        .light {
+            width: 12px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--warm-yellow);
+            box-shadow: 0 0 15px var(--warm-yellow), 0 0 30px var(--warm-yellow);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { opacity: 0.6; transform: translateY(0); }
+            to { opacity: 1; transform: translateY(5px); }
+        }
+
+        /* --- HERO --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 50px;
+            backdrop-filter: blur(8px);
+            border: 2px solid var(--festival-teal);
+            transform: rotate(-1deg);
+            box-shadow: 15px 15px 0px var(--festival-pink);
+            z-index: 5;
+        }
+
+        .tagline {
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: var(--warm-yellow);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        header h1 {
+            font-size: clamp(3rem, 12vw, 6.5rem);
+            color: var(--sand);
+            line-height: 0.85;
+            margin: 20px 0;
+            text-shadow: 4px 4px 0px var(--festival-pink), 8px 8px 0px var(--deep-purple);
+        }
+
+        .hosts-info {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.8rem;
+            color: var(--festival-teal);
+        }
+
+        /* --- COUNTDOWN --- */
+        #countdown {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .count-item {
+            background: var(--deep-purple);
+            padding: 15px;
+            min-width: 90px;
+            border-radius: 10px;
+            border: 1px solid var(--festival-pink);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .count-item span { display: block; font-size: 2.5rem; font-weight: 900; color: var(--warm-yellow); }
+        .count-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* --- SECTIONS --- */
+        section { padding: 80px 0; position: relative; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            margin-bottom: 50px;
+            color: var(--warm-yellow);
+            text-shadow: 3px 3px 0px var(--festival-pink);
+        }
+
+        /* --- GLASS CARDS --- */
+        .zones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .zone-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--glass);
+            padding: 40px 25px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .zone-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            border-color: var(--festival-teal);
+            box-shadow: 0 0 30px rgba(46, 234, 255, 0.3);
+        }
+
+        .zone-card i {
+            font-size: 3.5rem;
+            color: var(--festival-teal);
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px var(--festival-teal);
+        }
+
+        /* --- TIMETABLE --- */
+        .timetable {
+            max-width: 750px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--deep-purple);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 15px 15px 0px var(--festival-pink);
+        }
+
+        .time-entry {
+            display: flex;
+            padding: 20px 0;
+            border-bottom: 2px dashed rgba(49, 10, 49, 0.2);
+            align-items: center;
+        }
+
+        .time-entry:last-child { border: none; }
+
+        .time-val {
+            font-weight: 900;
+            color: var(--festival-pink);
+            font-size: 1.5rem;
+            min-width: 160px;
+        }
+
+        .time-desc { font-size: 1.4rem; font-family: 'Playfair Display', serif; font-weight: bold; }
+
+        /* --- PHOTO MEMO SPECIAL --- */
+        .photo-memo-section {
+            background: var(--festival-pink);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            transform: rotate(1deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* --- RSVP --- */
+        .rsvp-section {
+            background: var(--deep-purple);
+            color: var(--sand);
+            padding: 80px 20px;
+            text-align: center;
+            border-radius: 30px;
+            margin: 50px 0;
+            border: 4px solid var(--warm-yellow);
+            box-shadow: 0 0 50px rgba(255, 207, 51, 0.2);
+        }
+
+        .rsvp-number {
+            font-family: 'Abril Fatface', cursive;
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            margin: 20px 0;
+            color: var(--warm-yellow);
+            text-shadow: 3px 3px 0px var(--festival-pink);
+        }
+
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            background: rgba(0,0,0,0.9);
+            border-top: 2px solid var(--festival-pink);
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 3.2rem; }
+            .time-entry { flex-direction: column; text-align: center; }
+            .time-val { min-width: auto; margin-bottom: 10px; }
+            .hero-box { padding: 30px 20px; }
+            .decor-flower { font-size: 4rem; }
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <div class="flags">
-    <div class="flag" style="background:#f1c27d;"></div>
-    <div class="flag" style="background:#f7d1a1;"></div>
-    <div class="flag" style="background:#fdf0e0;"></div>
-    <div class="flag" style="background:#f1c27d;"></div>
-    <div class="flag" style="background:#f7d1a1;"></div>
-  </div>
-  <h1>Backyard Beats & Bites</h1>
-  <p>Music – Friends – Summer Vibes</p>
-</header>
+    <div class="fixed-bg"></div>
+    <div class="gradient-overlay"></div>
 
-<main>
-  <!-- Hosts & info -->
-  <section>
-    <h2>Info</h2>
-    <p><strong>Hosts:</strong> Sophie (40) & Frederick (45)</p>
-    <p><strong>Datum:</strong> 27 June 2026</p>
-    <p><strong>Locatie:</strong> Dullaertweg 60, Gistel</p>
-  </section>
-
-  <!-- Zones -->
-  <section>
-    <h2>Zones</h2>
-    <div class="zones">
-      <div class="zone">
-        <span>🎤</span>Main Stage
-        <div class="tooltip">Live bands and DJ performances on the main stage.</div>
-      </div>
-      <div class="zone">
-        <span>🍔</span>Food Corner
-        <div class="tooltip">Burgers, snacks, and festival treats available here.</div>
-      </div>
-      <div class="zone">
-        <span>🍺</span>Drinks
-        <div class="tooltip">Beer, wine, and soft drinks for all attendees.</div>
-      </div>
-      <div class="zone">
-        <span>🔥</span>Chill Zone
-        <div class="tooltip">Relax by the campfire with friends and good vibes.</div>
-      </div>
-      <div class="zone">
-        <span>📸</span>Photo Booth
-        <div class="tooltip">Capture fun memories with festival-themed props.</div>
-      </div>
+    <!-- String Lights -->
+    <div class="string-lights">
+        <div class="light"></div><div class="light"></div><div class="light"></div>
+        <div class="light"></div><div class="light"></div><div class="light"></div>
+        <div class="light"></div><div class="light"></div><div class="light"></div>
     </div>
-  </section>
 
-  <!-- Timetable -->
-  <section>
-    <h2>Timetable</h2>
-    <table>
-      <tr><th>Tijd</th><th>Activiteit</th></tr>
-      <tr><td>18:00</td><td>Gates open</td></tr>
-      <tr><td>19:00</td><td>Food Corner opens</td></tr>
-      <tr><td>20:00–22:00</td><td>Live Music</td></tr>
-      <tr><td>22:00–23:00</td><td>DJ Set 1</td></tr>
-      <tr><td>23:00–24:00</td><td>Surprise</td></tr>
-      <tr><td>24:00–01:00</td><td>DJ Set 2</td></tr>
-      <tr><td>01:00 – …</td><td>Final DJ</td></tr>
-    </table>
-  </section>
+    <!-- Header Section -->
+    <header>
+        <!-- Deze "bloemen" zijn nu betrouwbare FontAwesome iconen -->
+        <div class="decor-flower" style="top: 10%; right: 10%;">
+            <i class="fas fa-certificate"></i>
+        </div>
 
-  <!-- Extra info -->
-  <section>
-    <h2>Extra Info</h2>
-    <div class="info">
-      <p><strong>Dresscode:</strong> Festival vibes</p>
-      <p>Food & drinks available</p>
-      <p>Parking & bike parking</p>
-      <p><strong>Cadeautip ✉️</strong></p>
-      <p><strong>RSVP:</strong> Please confirm your attendance via 0474 56 76 96</p>
-      <a href="tel:+32474567696" class="rsvp">RSVP Now</a>
+        <div class="hero-box">
+            <div class="tagline">Music – Friends – Summer Vibes</div>
+            <h1>Backyard <br>Beats & Bites</h1>
+            <div class="hosts-info">Sophie (40) & Frederick (45)</div>
+            <div style="font-weight: 900; letter-spacing: 5px; margin-top: 10px; color: var(--festival-teal);">27 JUNI 2026 • GISTEL</div>
+            
+            <div id="countdown">
+                <div class="count-item"><span id="days">00</span><div class="count-label">Dagen</div></div>
+                <div class="count-item"><span id="hours">00</span><div class="count-label">Uur</div></div>
+                <div class="count-item"><span id="mins">00</span><div class="count-label">Min</div></div>
+                <div class="count-item"><span id="secs">00</span><div class="count-label">Sec</div></div>
+            </div>
+        </div>
+
+        <div class="decor-flower" style="bottom: 10%; left: 10%; color: var(--festival-teal); filter: drop-shadow(0 0 15px var(--festival-teal));">
+            <i class="fas fa-spa"></i>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- The Festival Grounds -->
+        <section id="zones" class="reveal">
+            <h2 class="section-title">The Festival Grounds</h2>
+            <div class="zones-grid">
+                <div class="zone-card">
+                    <i class="fa-solid fa-microphone-lines"></i>
+                    <h3>Main Stage</h3>
+                    <p>Live muziek & DJ sets tot in de vroege uurtjes.</p>
+                </div>
+                <div class="zone-card">
+                    <i class="fa-solid fa-burger"></i>
+                    <h3>Food Corner</h3>
+                    <p>Heerlijke festival bites. Vers bereid en de hele avond beschikbaar.</p>
+                </div>
+                <div class="zone-card">
+                    <i class="fa-solid fa-wine-glass-empty"></i>
+                    <h3>The Bar</h3>
+                    <p>Gekoelde dranken, zomerse wijnen en verfrissende bieren.</p>
+                </div>
+                <div class="zone-card">
+                    <i class="fa-solid fa-comments"></i>
+                    <h3>Chill Zone</h3>
+                    <p>De plek voor goede gesprekken en nieuwe herinneringen.</p>
+                </div>
+                <div class="zone-card">
+                    <i class="fa-solid fa-camera-retro"></i>
+                    <h3>Photo Booth</h3>
+                    <p>Leg je mooiste festival-outfit vast met onze retro props.</p>
+                </div>
+                <div class="zone-card">
+                    <i class="fa-solid fa-fire"></i>
+                    <h3>Campfire</h3>
+                    <p>Nagenieten bij de warmte van het vuur.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Line-Up -->
+        <section id="timetable" class="reveal">
+            <h2 class="section-title">The Line-Up</h2>
+            <div class="timetable">
+                <div class="time-entry">
+                    <div class="time-val">18:00</div>
+                    <div class="time-desc">Gates open | Welcome drinks & bites</div>
+                </div>
+                <div class="time-entry">
+                    <div class="time-val">19:00</div>
+                    <div class="time-desc">Food Corner opens</div>
+                </div>
+                <div class="time-entry">
+                    <div class="time-val">20:00 - 22:00</div>
+                    <div class="time-desc">Live music</div>
+                </div>
+                <div class="time-entry">
+                    <div class="time-val">22:00 - ...</div>
+                    <div class="time-desc">DJ sets</div>
+                </div>
+                <div class="time-entry">
+                    <div class="time-val">23:00</div>
+                    <div class="time-desc">The Midnight Surprise ✨</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Info -->
+        <section class="reveal">
+            <h2 class="section-title">Practical Info</h2>
+            
+            <div class="photo-memo-section">
+                <i class="fas fa-camera-retro" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <h3 style="font-family: 'Lato'; font-weight: 900; margin-bottom: 10px;">FESTIVAL PHOTO WALL</h3>
+                <p style="font-size: 1.3rem;">Breng een foto mee van jou & ons samen!</p>
+            </div>
+
+            <div class="zones-grid">
+                <div class="zone-card">
+                    <i class="fa-solid fa-tshirt"></i>
+                    <h3>Dresscode</h3>
+                    <p>Festival vibes</p>
+                </div>
+                <div class="zone-card">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <h3>Locatie</h3>
+                    <p>Dullaertweg 60, 8470 Gistel<br>Parking voor auto & fiets</p>
+                </div>
+                <div class="zone-card">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                    <h3>Cadeautip</h3>
+                    <p>Cadeautip: ✉️</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="rsvp-section reveal">
+            <h2 style="color: white;">Are you in?</h2>
+            <p style="font-size: 1.2rem;">Bevestig je aanwezigheid vóór 1 juni via:</p>
+            <div class="rsvp-number">0474 56 76 96</div>
+            <p style="font-family: 'Playfair Display'; font-style: italic; font-size: 1.5rem; color: var(--festival-teal);">We can't wait to dance with you!</p>
+        </section>
     </div>
-  </section>
-</main>
 
-<footer>
-  &copy; 2026 Backyard Beats & Bites
-</footer>
+    <footer>
+        <p>&copy; 2026 Backyard Beats & Bites | Sophie & Frederick</p>
+    </footer>
 
-<script>
-  // JavaScript voor mobiel tap/toggle van tooltips
-  const zones = document.querySelectorAll('.zone');
-  zones.forEach(zone => {
-    zone.addEventListener('click', () => {
-      // verwijder show-tooltip van andere zones
-      zones.forEach(z => {
-        if (z !== zone) z.classList.remove('show-tooltip');
-      });
-      // toggle deze zone
-      zone.classList.toggle('show-tooltip');
-    });
-  });
+    <script>
+        // --- COUNTDOWN TIMER ---
+        const eventDate = new Date("June 27, 2026 18:00:00").getTime();
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("mins").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("secs").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            if (distance < 0) { 
+                clearInterval(timer); 
+                document.getElementById("countdown").innerHTML = "<h2 style='color:var(--festival-teal)'>THE PARTY IS ON!</h2>"; 
+            }
+        }, 1000);
 
-  // Sluit tooltips als je buiten klikt
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.zone')) {
-      zones.forEach(z => z.classList.remove('show-tooltip'));
-    }
-  });
-</script>
+        // --- SCROLL REVEAL ---
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
 
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
